@@ -43,11 +43,7 @@ public class listAdapter extends BaseAdapter {
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         TextView textView = (TextView)view.findViewById(R.id.textView);
-
-        // (추가) 이미지뷰 추가하는 코드 작성하기
-
         textView.setText(pDataList.get(position).getDate());
-
 
         return view;
     }
