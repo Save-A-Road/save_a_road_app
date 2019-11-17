@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class pictureViewActivity extends AppCompatActivity {
 
+    // 구현해야 할 기능
+    // 1. 홈아이콘 누르면 MainActivity로
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
