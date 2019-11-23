@@ -2,14 +2,20 @@ package com.example.save_a_road_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(this, loadingActivity.class);
         startActivity(intent);
+        Context context = getApplicationContext();
+
 
         // 2
 
@@ -44,6 +52,34 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+        Handler mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message inputMessage) {
+                switch(inputMessage.what){
+
+                    // CONNECTED == 0 / DATA == 1 / DISCONNECTED == 3
+                    case 0:
+                        // do something with UI
+                        break;
+
+                    case 2 :
+                        String msg = (String) inputMessage.obj;
+                        Log.d("socket",  "Socket Data Receive !!");
+                        // do something with UI
+                        break;
+
+                    case 3 :
+                        // do something with UI
+                        break;
+
+                }
+            }
+        };
+
+        clientSocket socket = new clientSocket("192.168.0.1", 8080, mHandler, context);
+        socket.start();
+
     }
 
 }
