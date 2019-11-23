@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> pathList;
     ArrayList<String> nameList;
     pictureHandler picture_handler = pictureHandler.getInstance();
-
+    listAdapter myAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         Update_pDataList();
 
         ListView listView = (ListView)findViewById(R.id.listView);
-        final listAdapter myAdapter = new listAdapter(this,pDataList);
+        myAdapter = new listAdapter(this,pDataList);
         listView.setAdapter(myAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     // CONNECTED == 0 / DATA == 1 / DISCONNECTED == 3
                     case 1:
                         // do something with UI
-                        // 2. update_pDataList 한 후 Adepter에 다시 넘겨서 ListView 업데이트 !!
+                        Update_pDataList();
+                        myAdapter.notifyDataSetChanged();
                         break;
 
                     case 2 :
@@ -81,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
         socket.start();
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Update_pDataList();
+        myAdapter.notifyDataSetChanged();
+    }
+
 
     public void Update_pDataList(){
 

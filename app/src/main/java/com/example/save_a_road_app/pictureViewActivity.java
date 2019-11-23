@@ -39,6 +39,7 @@ public class pictureViewActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home){
+            setResult(0);
             finish();
             return true;
         }
