@@ -39,13 +39,16 @@ public class MainActivity extends AppCompatActivity {
         final listAdapter myAdapter = new listAdapter(this,pDataList);
         listView.setAdapter(myAdapter);
 
-        // 1. 리스트 클릭하면 pictureViewActivity로
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
                 Toast.makeText(getApplicationContext(),
                         myAdapter.getItem(position).getDate(),
                         Toast.LENGTH_LONG).show();
+                Intent intent2 = new Intent(getApplicationContext(), pictureViewActivity.class);
+                intent2.putExtra("NAME", myAdapter.getItem(position).getDate());
+                startActivity(intent2);
+
             }
         });
 

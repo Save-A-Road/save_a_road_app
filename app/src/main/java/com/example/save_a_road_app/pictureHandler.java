@@ -2,6 +2,7 @@ package com.example.save_a_road_app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class pictureHandler {
 
             // jpg 이 들어가 있는 파일명을 찾습니다.
             if(tempFile.getName().toLowerCase().contains("jpg")) {
-                filePath = storage + "/" + tempFile.getName();
+                filePath = tempFile.getPath();
                 filePathList.add(filePath);
                 fileNameList.add(tempFile.getName());
             }
@@ -63,6 +64,24 @@ public class pictureHandler {
         return fileNameList;
     }
 
+    public Bitmap getBitmap(String name){
+
+        File file = new File(storage.toString());
+        File[] files = file.listFiles();
+        String filePath = "";
+
+        for(File tempFile : files) {
+
+            // name 이 들어가 있는 파일명을 찾습니다.
+            if(tempFile.getName().toLowerCase().contains(name)) {
+                filePath = tempFile.getPath();
+                return BitmapFactory.decodeFile(filePath);
+            }
+        }
+
+        return null;
+
+    }
 
 
     public void saveBitmapToJpeg(Bitmap bitmap, String name) {
