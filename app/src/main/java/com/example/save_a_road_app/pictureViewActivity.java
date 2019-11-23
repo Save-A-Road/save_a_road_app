@@ -10,10 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class pictureViewActivity extends AppCompatActivity {
-
-    // 구현해야 할 기능
-    // 1. 홈아이콘 누르면 MainActivity로
-    // 2. 사진 설정
+    
     pictureHandler picture_handler = pictureHandler.getInstance();
 
     @Override
