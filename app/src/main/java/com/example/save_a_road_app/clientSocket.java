@@ -22,8 +22,6 @@ public class clientSocket extends Thread{
     private String addr = "";
     private int port = 8080;
     private Handler handler = null;
-    // private BufferedReader buffReceiver;
-    // private BufferedWriter buffSender;
     // Picture 관련 변수들
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] buffer;

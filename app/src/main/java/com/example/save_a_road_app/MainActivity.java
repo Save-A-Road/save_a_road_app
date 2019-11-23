@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 switch(inputMessage.what){
 
                     // CONNECTED == 0 / DATA == 1 / DISCONNECTED == 3
-                    case 0:
+                    case 1:
                         // do something with UI
                         break;
 
