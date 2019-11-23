@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+// Sigleton 객체
 public class pictureHandler {
 
     private Context context = null;
