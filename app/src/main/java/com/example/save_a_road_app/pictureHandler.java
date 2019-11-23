@@ -41,6 +41,7 @@ public class pictureHandler {
     public ArrayList<String> getPathList(){
 
         filePathList = new ArrayList<>();
+        fileNameList = new ArrayList<>();
         String filePath = "";
         File file = new File(storage.toString());
         File[] files = file.listFiles();
@@ -75,7 +76,6 @@ public class pictureHandler {
         File tempFile = new File(storage, fileName);
 
         try {
-
             // 자동으로 빈 파일을 생성합니다.
             tempFile.createNewFile();
 
