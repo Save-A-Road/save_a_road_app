@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
                 Toast.makeText(getApplicationContext(),
-                        myAdapter.getItem(position).getPath(),
+                        myAdapter.getItem(position).getDate(),
                         Toast.LENGTH_LONG).show();
             }
         });

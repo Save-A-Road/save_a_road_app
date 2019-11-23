@@ -2,6 +2,7 @@ package com.example.save_a_road_app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;
@@ -14,9 +15,11 @@ import java.util.ArrayList;
 public class pictureHandler {
 
     private Context context = null;
-    private ArrayList<pictureData> pDataList;
+    File storage;
 
     private  pictureHandler(){
+        //내부저장소 파일 경로
+        storage = context.getFilesDir();
     }
 
 
@@ -34,16 +37,37 @@ public class pictureHandler {
         this.context = context;
     }
 
-    public void makePicutreDataList(){
+    public ArrayList<String> getImageFilePathList(){
 
+        ArrayList<String> filePathList = new ArrayList<>();
+        String filePath = "";
+        File file = new File(storage.toString());
+        File[] files = file.listFiles();
+
+        for(File tempFile : files) {
+
+            // jpg 이 들어가 있는 파일명을 찾습니다.
+            if(tempFile.getName().toLowerCase().contains("jpg")) {
+                filePath = storage + "/" + tempFile.getName();
+                filePathList.add(filePath);
+            }
+        }
+
+        return filePathList;
+    }
+
+    public Bitmap getBitmapImage(String path){
+
+        Bitmap bitmap = null;
+
+        bitmap = BitmapFactory.decodeFile(path);
+
+        return bitmap;
     }
 
     public void saveBitmapToJpeg(Bitmap bitmap, String name) {
 
         if(context == null) return;
-
-        //내부저장소 파일 경로
-        File storage = context.getFilesDir();
 
         //저장할 파일 이름
         String fileName = name + ".jpg";
