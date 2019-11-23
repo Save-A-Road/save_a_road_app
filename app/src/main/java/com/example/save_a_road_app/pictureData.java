@@ -1,19 +1,18 @@
 package com.example.save_a_road_app;
 
+import android.graphics.Bitmap;
+
 public class pictureData {
 
-    private String path;
+    private Bitmap bitmap;
     private String date;
 
-    public pictureData(String path, String date){
-
-        this.path = path;
+    public pictureData(Bitmap bitmap, String date){
+        this.bitmap = bitmap;
         this.date = date;
     }
 
-    public String getPath(){
-        return this.path;
-    }
+    public Bitmap getBitmap(){ return this.bitmap; }
 
     public String getDate(){
         return this.date;
