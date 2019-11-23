@@ -7,7 +7,9 @@ public class pictureData {
     private Bitmap bitmap;
     private String date;
 
-    public pictureData(){
+    public pictureData(Bitmap bitmap, String date){
+        this.bitmap = bitmap;
+        this.date = date;
     }
 
     public Bitmap getBitmap(){ return this.bitmap; }

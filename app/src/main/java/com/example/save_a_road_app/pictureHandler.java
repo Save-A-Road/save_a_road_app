@@ -15,7 +15,9 @@ import java.util.ArrayList;
 public class pictureHandler {
 
     private Context context = null;
-    File storage;
+    private File storage;
+    private  ArrayList<String> filePathList;
+    private  ArrayList<String> fileNameList;
 
     private  pictureHandler(){
         //내부저장소 파일 경로
@@ -37,9 +39,9 @@ public class pictureHandler {
         this.context = context;
     }
 
-    public ArrayList<String> getImageFilePathList(){
+    public ArrayList<String> getPathList(){
 
-        ArrayList<String> filePathList = new ArrayList<>();
+        filePathList = new ArrayList<>();
         String filePath = "";
         File file = new File(storage.toString());
         File[] files = file.listFiles();
@@ -50,20 +52,18 @@ public class pictureHandler {
             if(tempFile.getName().toLowerCase().contains("jpg")) {
                 filePath = storage + "/" + tempFile.getName();
                 filePathList.add(filePath);
+                fileNameList.add(tempFile.getName());
             }
         }
 
         return filePathList;
     }
 
-    public Bitmap getBitmapImage(String path){
-
-        Bitmap bitmap = null;
-
-        bitmap = BitmapFactory.decodeFile(path);
-
-        return bitmap;
+    public ArrayList<String> getNameList(){
+        return fileNameList;
     }
+
+
 
     public void saveBitmapToJpeg(Bitmap bitmap, String name) {
 
