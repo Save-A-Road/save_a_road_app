@@ -2,7 +2,6 @@ package com.example.save_a_road_app;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.File;

@@ -11,13 +11,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
