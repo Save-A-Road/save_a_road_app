@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // Sigleton 객체
 public class pictureHandler {
 
     private Context context = null;
+    private ArrayList<pictureData> pDataList;
 
     private  pictureHandler(){
     }
@@ -30,6 +32,10 @@ public class pictureHandler {
 
     public void setContext(Context context){
         this.context = context;
+    }
+
+    public void makePicutreDataList(){
+
     }
 
     public void saveBitmapToJpeg(Bitmap bitmap, String name) {
