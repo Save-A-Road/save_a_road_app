@@ -37,6 +37,7 @@ public class pictureHandler {
         this.context = context;
         //내부저장소 파일 경로
         storage = context.getFilesDir();
+        Log.e("MyTag", "location"+storage.toString());
     }
 
     public ArrayList<String> getPathList(){
@@ -101,6 +102,10 @@ public class pictureHandler {
             // 파일을 쓸 수 있는 스트림을 준비합니다.
             FileOutputStream out = new FileOutputStream(tempFile);
 
+            if (bitmap == null) {
+                Log.d("aaa","no bitmap");
+                return;
+            }
             // compress 함수를 사용해 스트림에 비트맵을 저장합니다.
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 

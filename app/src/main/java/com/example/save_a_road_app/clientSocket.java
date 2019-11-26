@@ -5,9 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -20,13 +24,14 @@ public class clientSocket extends Thread{
     // Socket 관련 변수들
     private Socket socket;
     private String addr = "";
-    private int port = 8080;
+    private int port;
     private Handler handler = null;
     // Picture 관련 변수들
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] buffer;
     int bytesRead;
     InputStream inputStream;
+    OutputStream outputStream;
     Bitmap bitmap;
     private boolean bConnected = false;
     pictureHandler picture_handler = pictureHandler.getInstance();
@@ -58,12 +63,13 @@ public class clientSocket extends Thread{
     private boolean connect(String addr, int port) {
 
         try{
-            InetSocketAddress socketAddress = new InetSocketAddress(InetAddress.getByName(addr), port);
+            InetSocketAddress socketAddress = new InetSocketAddress(addr, port);
             socket = new Socket();
             socket.connect(socketAddress, 7000);
         }catch(IOException e){
             System.out.println(e);
             e.printStackTrace();
+            Log.d("SocketLog", e.toString());
             return false;
         }
         return true;
@@ -84,12 +90,17 @@ public class clientSocket extends Thread{
     public void run(){
 
         // connect
-        if(!connect(addr, port)) return;
+        if(!connect(addr, port)) {
+            Log.d("SocketLog", "Connected Fail !!");
+            Log.d("SocketLog", "address" + addr + " " + port);
+            return;
+        }
         if(socket == null) return;
 
         // buffer receiver & sender
         try{
             inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream() ;
         }catch (IOException e){
             System.out.println(e);
             e.printStackTrace();
@@ -99,16 +110,27 @@ public class clientSocket extends Thread{
 
         // send socket connection message to Handler
         makeMessage(MessageType.SIMSOCK_CONNECTED, "");
-        Log.d("Socket Log", "socket_thread start !!");
+        Log.d("SocketLog", "socket_thread start !!");
+
+
+        ObjectOutputStream outputStream = null;
+        try {
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.writeObject("hello");
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         while(!Thread.interrupted()){
-            buffer = new byte[4096];
-            try{
-                if( (bytesRead = inputStream.read(buffer)) > 0){
+
                     // buffer에 bytesRead만큼 쓰기
-                    byteArrayOutputStream.write(buffer, 0, bytesRead);
+                    //outputStream.write(buffer, 0, bytesRead);
                     // byte 이미지를 bitmap으로 변환
-                    bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
+                    //bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
                     // 현재 시간
                     now = System.currentTimeMillis();
                     mDate = new Date(now);
@@ -117,14 +139,10 @@ public class clientSocket extends Thread{
                     picture_handler.saveBitmapToJpeg(bitmap, currentTime);
                     // UI 업데이트 (UI 업데이트 시 pictureData 객체들을 불러와서 보여주자)
                     makeMessage(MessageType.SIMSOCK_DATA, "");
-                }
-            }catch (IOException e){
-                System.out.println(e);
-                e.printStackTrace();
-            }
 
+            Log.d("SocketLog", Integer.toString(bytesRead));
             makeMessage(MessageType.SIMSOCK_DISCONNECTED, "");
-            Log.d("Socket Log", "socket_thread terminated !!");
+            Log.d("SocketLog", "socket_thread terminated !!");
 
         }
 

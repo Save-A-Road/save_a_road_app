@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, loadingActivity.class);
         startActivity(intent);
         Context context = getApplicationContext();
+        File storage = context.getFilesDir();
+        Log.w("SocketLog", "location");
         picture_handler.setContext(context);
 
         Update_pDataList();
@@ -59,19 +63,19 @@ public class MainActivity extends AppCompatActivity {
                 switch(inputMessage.what){
 
                     // CONNECTED == 0 / DATA == 1 / DISCONNECTED == 3
-                    case 1:
+                    case 0:
                         // do something with UI
                         Update_pDataList();
                         myAdapter.notifyDataSetChanged();
                         break;
 
-                    case 2 :
+                    case 1:
                         String msg = (String) inputMessage.obj;
                         Log.d("socket",  "Socket Data Receive !!");
                         // do something with UI
                         break;
 
-                    case 3 :
+                    case 2:
                         // do something with UI
                         break;
 
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        clientSocket socket = new clientSocket("192.168.0.1", 8080, mHandler, context);
+        clientSocket socket = new clientSocket("172.20.10.4", 37442, mHandler, context);
         socket.start();
 
     }
