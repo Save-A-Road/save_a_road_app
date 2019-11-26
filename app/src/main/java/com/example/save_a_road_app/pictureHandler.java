@@ -20,8 +20,6 @@ public class pictureHandler {
     private  ArrayList<String> fileNameList;
 
     private  pictureHandler(){
-        //내부저장소 파일 경로
-        storage = context.getFilesDir();
     }
 
 
@@ -37,6 +35,8 @@ public class pictureHandler {
 
     public void setContext(Context context){
         this.context = context;
+        //내부저장소 파일 경로
+        storage = context.getFilesDir();
     }
 
     public ArrayList<String> getPathList(){

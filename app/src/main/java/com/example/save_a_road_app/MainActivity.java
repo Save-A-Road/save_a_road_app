@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, loadingActivity.class);
         startActivity(intent);
         Context context = getApplicationContext();
+        picture_handler.setContext(context);
 
         Update_pDataList();
 
